@@ -1,0 +1,131 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background: #FFCCE5; /* Default pastel color (changes dynamically in script) */
+}
+
+/* Game container */
+.game-container {
+    position: relative;
+    text-align: center;
+}
+
+/* Profile bar above wizard */
+.profile-bar {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.profile-name {
+    text-transform: capitalize;
+}
+
+.profile-level {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #FFD700;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Wizard image */
+#wizard-image {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#wizard-image:hover {
+    transform: scale(1.05); /* Slightly grow the image */
+}
+
+#wizard-image:active {
+    transform: scale(0.95);
+}
+
+/* Switch gender button */
+#switch-gender {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #A4C3FF;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#switch-gender:hover {
+    transform: scale(1.1);
+}
+
+/* Tutorial box */
+.tutorial-box {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background-color: #FFF8C3;
+    border-radius: 15px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+/* XP effect */
+.xp-effect {
+    position: absolute;
+    color: green;
+    font-weight: bold;
+    font-size: 24px;
+    animation: rise-and-fade 1s forwards;
+    pointer-events: none;
+}
+
+@keyframes rise-and-fade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
