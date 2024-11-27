@@ -1,68 +1,100 @@
-// Constants and variables
 const wizardImage = document.getElementById('wizard-image');
-const characterNameElement = document.getElementById('character-name');
-const levelCircle = document.getElementById('level-circle');
-const xpBar = document.getElementById('xp-bar');
+const wizardType = document.getElementById('wizard-type');
+const levelIndicator = document.getElementById('level');
+const switchGenderBtn = document.getElementById('switch-gender');
 const tutorialBox = document.getElementById('tutorial-box');
-const deathMessage = document.getElementById('death-message');
-const switchGenderButton = document.getElementById('switch-gender-button');
 
+let characterType = 'wizard'; // Default type: wizard
+let stage = 0; // 0: Basic, 1: Skilled, 2: Master
 let xp = 0;
-let level = 1;
 let isIll = false;
 let tutorialStep = 0;
-let illnessTimer;
-let characterType = "Wizard";
 
-// Predefined stages and assets
-const stages = ["basic", "skilled", "master"];
-const pastelRainbowColors = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF"];
+const stages = ['basic', 'skilled', 'master'];
+const pastelRainbowColors = ['#FFCCE5', '#FFCCF9', '#FFC3C3', '#FFF8C3', '#D4F1CC', '#C5DFFF', '#D5AAFF'];
 
-// Get the correct asset path for the current character
-function assetsPath(type) {
-    return `assets/${type.toLowerCase()}/`;
-}
+// Function to get the assets path
+const assetsPath = (type) => `assets/${type}/`;
 
-// Random background color on page load
+// Function to set a random pastel rainbow background color
 function setRandomBackgroundColor() {
     const randomColor = pastelRainbowColors[Math.floor(Math.random() * pastelRainbowColors.length)];
     document.body.style.backgroundColor = randomColor;
 }
 
-// Update character display
+window.addEventListener('load', setRandomBackgroundColor);
+
+// Function to update the character image, type, and level
 function updateCharacter() {
-    levelCircle.textContent = level;
-    characterNameElement.textContent = `${stages[Math.min(level - 1, 2)]} ${characterType}`;
-    wizardImage.src = `${assetsPath(characterType)}${stages[Math.min(level - 1, 2)]}.png`;
+    const stageName = stages[stage];
+    wizardImage.src = `${assetsPath(characterType)}${stageName}.png`;
+    wizardType.textContent = `${stageName.charAt(0).toUpperCase() + stageName.slice(1)} ${characterType === 'wizard' ? 'Wizard' : 'Witch'}`;
+    levelIndicator.textContent = `${stage + 1}`;
 }
 
-// Update XP bar
-function updateXPBar() {
-    const percentage = (xp / 100) * 100;
-    xpBar.style.width = `${percentage}%`;
+// Function to update the switch gender button
+function updateSwitchGenderButton() {
+    switchGenderBtn.textContent = `Switch to ${characterType === 'wizard' ? 'Witch' : 'Wizard'}`;
+    switchGenderBtn.style.backgroundColor = characterType === 'wizard' ? '#A4C3FF' : '#D5AAFF'; // Blue for witch, violet for wizard
 }
 
-// Handle tutorial
-function showTutorialBox(message, targetElement) {
-    tutorialBox.textContent = message;
-    const rect = targetElement.getBoundingClientRect();
-    tutorialBox.style.left = `${rect.left}px`;
-    tutorialBox.style.top = `${rect.top - 50}px`;
-    tutorialBox.style.display = 'block';
-}
+// Switch between wizard and witch
+switchGenderBtn.addEventListener('click', () => {
+    characterType = characterType === 'wizard' ? 'witch' : 'wizard';
+    updateCharacter();
+    updateSwitchGenderButton();
+});
 
-// Handle death
-function handleDeath() {
-    deathMessage.textContent = `YOUR ${characterType.toUpperCase()} DIED`;
-    deathMessage.style.display = 'block';
-    clearInterval(illnessTimer);
-    setTimeout(() => {
-        deathMessage.style.display = 'none';
+// Handle clicks on the wizard image
+wizardImage.addEventListener('click', (event) => {
+    // Tutorial steps
+    if (tutorialStep === 0) {
+        tutorialBox.textContent = "When you collect enough experience, you will level up. Track your level here";
+        tutorialStep++;
+    } else if (tutorialStep === 1) {
+        wizardImage.src = `${assetsPath(characterType)}ill.png`;
+        tutorialBox.textContent = "Don't click when your wizard is ill or they will die :(";
+        tutorialStep++;
+    } else if (tutorialStep === 2) {
+        tutorialBox.textContent = "Good luck!";
+        tutorialStep++;
+    } else if (tutorialStep === 3) {
+        // Begin the actual game
+        tutorialBox.style.opacity = 0; // Fade out tutorial box
+        setTimeout(() => tutorialBox.style.display = 'none', 500); // Hide after fade
         startGame();
-    }, 3000);
-}
+        tutorialStep ++;
+    }
 
-// Illness timer
+    if (tutorialStep >= 4) {
+        // Normal game behavior
+        xp += 1;
+
+        // Show floating XP effect at the mouse position
+        const xpEffect = document.createElement('div');
+        xpEffect.textContent = '+1 XP';
+        xpEffect.className = 'xp-effect';
+        document.body.appendChild(xpEffect);
+
+        xpEffect.style.left = `${event.clientX}px`;
+        xpEffect.style.top = `${event.clientY}px`;
+
+        setTimeout(() => {
+            xpEffect.remove();
+        }, 1000); // Effect lasts for 1 second
+
+        // Check for evolution
+        if (xp >= 100) {
+            xp = 0;
+            stage++;
+            if (stage > 2) stage = 2; // Cap at Master
+        }
+        updateCharacter();
+    }
+});
+
+// Random illness timer
+let illnessTimer;
 function startIllnessTimer() {
     illnessTimer = setInterval(() => {
         if (Math.random() < 0.1) {
@@ -70,46 +102,84 @@ function startIllnessTimer() {
             wizardImage.src = `${assetsPath(characterType)}ill.png`;
             setTimeout(() => {
                 isIll = false;
-                updateCharacter();
-            }, 5000);
+                wizardImage.src = `${assetsPath(characterType)}${stages[stage]}.png`;
+            }, 5000); // Reset after 5 seconds
         }
-    }, 3000);
+    }, 3000); // Illness check every 3 seconds
 }
 
-// Handle clicks
-wizardImage.addEventListener('click', () => {
-    if (isIll) {
-        wizardImage.src = `${assetsPath(characterType)}dead.png`;
-        handleDeath();
-        return;
-    }
-
-    xp += 10;
-    updateXPBar();
-    if (xp >= 100) {
-        xp = 0;  // Reset XP after leveling up
-        level++;
-        updateCharacter();
-    }
-});
-
-// Switch gender button
-switchGenderButton.addEventListener('click', () => {
-    characterType = characterType === "Wizard" ? "Witch" : "Wizard";
-    switchGenderButton.textContent = `Switch to ${characterType === "Wizard" ? "Witch" : "Wizard"}`;
-    switchGenderButton.style.backgroundColor = characterType === "Wizard" ? "#d1c4e9" : "#a5d8ff"; // Change color based on gender
-    updateCharacter();
-});
-
-// Start game
+// Start the game and reset stats
 function startGame() {
     xp = 0;
-    level = 1;
-    isIll = false;
+    stage = 0;
     updateCharacter();
-    updateXPBar();
-    setRandomBackgroundColor();
     startIllnessTimer();
 }
 
-startGame();
+updateCharacter();
+updateSwitchGenderButton();
+
+// Select XP bar and death message elements
+const xpBar = document.getElementById('xp-bar');
+const deathMessage = document.getElementById('death-message');
+
+// Update XP bar
+function updateXPBar() {
+    const percentage = (xp / 100) * 100; // Calculate percentage of XP
+    xpBar.style.width = `${percentage}%`;
+}
+
+// Handle tutorial box placement
+function showTutorialBox(message, targetElement) {
+    tutorialBox.textContent = message;
+    const rect = targetElement.getBoundingClientRect();
+    tutorialBox.style.left = `${rect.right + 10}px`;
+    tutorialBox.style.top = `${rect.top}px`;
+    tutorialBox.style.display = 'block';
+}
+
+// Death logic
+function handleDeath() {
+    deathMessage.textContent = `YOUR ${characterType.toUpperCase()} DIED`;
+    deathMessage.style.display = 'block';
+    clearInterval(illnessTimer); // Stop illness timer
+    setTimeout(() => {
+        deathMessage.style.display = 'none';
+        startGame(); // Restart the game
+    }, 3000); // Show message for 3 seconds
+}
+
+// Modify click behavior for death handling
+wizardImage.addEventListener('click', (event) => {
+    if (tutorialStep === 0) {
+        showTutorialBox("When you collect enough experience, you will level up. Track your level here", document.getElementById('profile-bar'));
+        tutorialStep++;
+    } else if (tutorialStep === 1) {
+        wizardImage.src = `${assetsPath(characterType)}ill.png`;
+        showTutorialBox("Don't click when your wizard is ill or they will die :(", wizardImage);
+        tutorialStep++;
+    } else if (tutorialStep === 2) {
+        showTutorialBox("Good luck!", wizardImage);
+        tutorialStep++;
+    } else if (tutorialStep === 3) {
+        tutorialBox.style.display = 'none'; // Hide tutorial box
+        startGame(); // Start game
+    }
+
+    if (tutorialStep >= 4) {
+        // Game logic
+        if (isIll) {
+            wizardImage.src = `${assetsPath(characterType)}dead.png`;
+            handleDeath(); // Trigger death logic
+        } else {
+            xp += 1;
+            updateXPBar(); // Update XP bar progress
+            if (xp >= 100) {
+                xp = 0;
+                stage++;
+                if (stage > 2) stage = 2; // Cap at Master
+                updateCharacter();
+            }
+        }
+    }
+});

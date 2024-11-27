@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicky Wizard Game</title>
+    <title>Wizard Evolution Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="character-container">
-        <div id="character-info">
-            <div id="profile-bar">
-                <span id="character-name">Basic Wizard</span>
-                <div id="level-circle">1</div>
-            </div>
-            <div id="xp-bar-container">
-                <div id="xp-bar"></div>
-            </div>
+    <div class="game-container">
+        <!-- Profile bar -->
+        <div class="profile-bar">
+            <span id="wizard-type" class="profile-name">Basic Wizard</span>
+            <div id="level" class="profile-level">1</div>
         </div>
-        <img id="wizard-image" src="assets/male/basic.png" alt="Wizard">
+        <!-- Wizard image -->
+        <img id="wizard-image" src="assets/wizard/basic.png" alt="Wizard">
     </div>
-    <div id="tutorial-box"></div>
-    <div id="death-message"></div>
-    <button id="switch-gender-button">Switch to Witch</button>
+
+    <!-- Tutorial message box -->
+    <div id="tutorial-box" class="tutorial-box">Click here to gain experience</div>
+    
+    <!-- Switch gender button -->
+    <button id="switch-gender">Switch to Witch</button>
+
     <script src="script.js"></script>
 </body>
 </html>
