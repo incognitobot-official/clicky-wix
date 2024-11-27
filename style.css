@@ -24,9 +24,11 @@ body {
     top: -120px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
     align-items: center;
+    text-align: center;
+    display: flex;
     gap: 20px;
+    width: 100%;
     background: rgba(0, 0, 0, 0.7);
     padding: 10px 20px;
     border-radius: 40px;
@@ -37,17 +39,21 @@ body {
 }
 
 .profile-name {
+    display: inline-block;
     text-transform: capitalize;
 }
 
 .profile-level {
+    display: inline-block;
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    left: 100%;
     background-color: #FFD700;
     color: black;
     display: flex;
     justify-content: center;
+    text-align: center;
     align-items: center;
     font-size: 24px;
     font-weight: bold;
@@ -112,8 +118,9 @@ body {
 /* XP effect */
 .xp-effect {
     position: absolute;
-    color: green;
+    color: white;
     font-weight: bold;
+    text-align: center;
     font-size: 24px;
     animation: rise-and-fade 1s forwards;
     pointer-events: none;

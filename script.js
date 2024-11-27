@@ -63,6 +63,7 @@ wizardImage.addEventListener('click', (event) => {
         tutorialBox.style.opacity = 0; // Fade out tutorial box
         setTimeout(() => tutorialBox.style.display = 'none', 500); // Hide after fade
         startGame();
+        tutorialStep ++;
     }
 
     if (tutorialStep >= 4) {
