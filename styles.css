@@ -1,0 +1,133 @@
+/* General body styles */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffecf0;
+    font-family: Arial, sans-serif;
+}
+
+/* Character container styles */
+#character-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 20px; /* Increased margin for spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#character-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#level-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #4caf50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* XP bar styles */
+#xp-bar-container {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px #00000030;
+}
+
+#xp-bar {
+    width: 0;
+    height: 100%;
+    background-color: #90ee90;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Wizard image hover effect */
+#wizard-image {
+    width: 250px;
+    height: auto;
+    transition: transform 0.3s;
+    margin-top: 20px; /* Added spacing */
+}
+
+#wizard-image:hover {
+    transform: scale(1.05);
+}
+
+/* Tutorial box styles */
+#tutorial-box {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 200px;
+    font-size: 14px;
+    text-align: center;
+    z-index: 100;
+    display: none;
+}
+
+/* Death message styles */
+#death-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+    display: none;
+    z-index: 200;
+}
+
+/* Gender switch button */
+#switch-gender-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #d1c4e9;
+    border: none;
+    color: black;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#switch-gender-button.wizard {
+    background-color: #d1c4e9;
+}
+
+#switch-gender-button.witch {
+    background-color: #b3e5fc;
+}
+
+#switch-gender-button:hover {
+    filter: brightness(1.1);
+}
