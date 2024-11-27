@@ -1,133 +1,138 @@
-/* General body styles */
+/* Base styles */
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    text-align: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    background-color: #ffecf0;
-    font-family: Arial, sans-serif;
-}
-
-/* Character container styles */
-#character-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#profile-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 200px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    padding: 5px;
-    margin-bottom: 20px; /* Increased margin for spacing */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#character-name {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-#level-circle {
-    width: 40px;
-    height: 40px;
-    background-color: #4caf50;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* XP bar styles */
-#xp-bar-container {
-    position: relative;
-    width: 200px;
-    height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
     overflow: hidden;
-    box-shadow: inset 0 0 5px #00000030;
+    background: #FFCCE5; /* Default pastel color (changes dynamically in script) */
 }
 
-#xp-bar {
-    width: 0;
-    height: 100%;
-    background-color: #90ee90;
-    transition: width 0.3s ease-in-out;
+/* Game container */
+.game-container {
+    position: relative;
+    text-align: center;
 }
 
-/* Wizard image hover effect */
+/* Profile bar above wizard */
+.profile-bar {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.profile-name {
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.profile-level {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: 100%;
+    background-color: #FFD700;
+    color: black;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Wizard image */
 #wizard-image {
-    width: 250px;
-    height: auto;
-    transition: transform 0.3s;
-    margin-top: 20px; /* Added spacing */
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
 #wizard-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Slightly grow the image */
 }
 
-/* Tutorial box styles */
-#tutorial-box {
+#wizard-image:active {
+    transform: scale(0.95);
+}
+
+/* Switch gender button */
+#switch-gender {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    max-width: 200px;
-    font-size: 14px;
-    text-align: center;
-    z-index: 100;
-    display: none;
-}
-
-/* Death message styles */
-#death-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: red;
-    font-size: 24px;
-    font-weight: bold;
-    display: none;
-    z-index: 200;
-}
-
-/* Gender switch button */
-#switch-gender-button {
-    position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #d1c4e9;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #A4C3FF;
     border: none;
-    color: black;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 10px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#switch-gender-button.wizard {
-    background-color: #d1c4e9;
+#switch-gender:hover {
+    transform: scale(1.1);
 }
 
-#switch-gender-button.witch {
-    background-color: #b3e5fc;
+/* Tutorial box */
+.tutorial-box {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background-color: #FFF8C3;
+    border-radius: 15px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: opacity 0.5s ease;
 }
 
-#switch-gender-button:hover {
-    filter: brightness(1.1);
+/* XP effect */
+.xp-effect {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+    animation: rise-and-fade 1s forwards;
+    pointer-events: none;
+}
+
+@keyframes rise-and-fade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
 }

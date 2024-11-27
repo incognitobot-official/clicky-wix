@@ -8,8 +8,25 @@ Objective: Evolve your wand-yielding being, but take care when they fall ill.
 
 ## Features:
 - Tutorial
-- Level bar
-- 3 Tiers
+- Level Indicator
+- Gain EXP Effect
+- 3 Tiers per gender
 - Toggle Witch/Wizard (gender support)
+- Random pastel background color
 
+## LIMITATIONS:
+- Level capped at 3
+- No death animation (level is reset upon death)
+- Limited user interaction
 
+## COMING SOON:
+- More tiers
+- Hand-drawn artwork
+- Better tutorial system
+- Level bar (/100)
+- Shop
+- Achievements
+- Secrets & Easter Eggs
+- Cheats....?
+
+![alt preview](https://github.com/incognitobot-official/clicky-wix/blob/main/preview.png?raw=true)
